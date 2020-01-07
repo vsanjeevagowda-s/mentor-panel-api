@@ -1,24 +1,27 @@
-var express    = require('express');
-var app        = express();
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 const cors = require('cors');
-var bodyParser = require('body-parser');
-require('dotenv').config();
+const config = require('./config/environment');
+const dbConnect = require('./models/connect');
+const {
+  mentor
+} = require('./routes');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 app.use(cors());
 app.options('*', cors());
 
-var port = process.env.PORT || 8080;
-var router = express.Router();
-
-app.use('/api', router);
-
-
-router.get('/', (req, res) => {
-  res.json({data: "Welcome"});
+app.get('/', (req, res) => {
+  return res.json({ message: 'Welcome to my slate api' });
 });
 
-app.listen(port);
-console.log('Server started at: localhost:' + port);
+mentor(app);
+
+dbConnect.on('connected', () => {
+  console.log('db connected at: ', config.db_url)
+  const server = app.listen(config.port, () => {
+    console.log(`my-slate api listening on port ${config.port}!`);
+  });
+});

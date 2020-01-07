@@ -1,3 +1,11 @@
 node_modules
-.vscode
 package-lock.json
+env.sh
+.DS_Store
+.vscode
+ngrok
+.env
+.nyc_output
+coverage
+xunit.xml
+logs
