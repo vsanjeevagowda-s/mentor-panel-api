@@ -5,6 +5,7 @@ const mentorRoutes = (app) => {
   app.post('/api/mentors', mentor.createMentor);
   app.put('/api/mentors/:id', mentor.updateMentor);
   app.delete('/api/mentors/:id', mentor.deleteMentor);
+  app.get('/api/mentors/:id', mentor.showMentor);
 };
 
 module.exports = mentorRoutes;
