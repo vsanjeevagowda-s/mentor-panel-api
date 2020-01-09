@@ -15,9 +15,11 @@ const createMentor = async (req, res) => {
 const listMentor = async (req, res) => {
   try {
     const { page } = req.query;
-    const mentors = await Mentor.find({}, {}, { skip: (eval(page) - 1) * 10, limit: 10 });
+    let pageNumber = page ? eval(page) : 1;
+    const {docs:mentors, ...rest} = await Mentor.paginate({}, { page: pageNumber, limit: 3 });
     if(mentors.length === 0) throw new Error('No More Record!');
-    return res.status(200).json({ mentors });
+    const message = 'Mentors Listed successfully.';
+    return res.status(200).json({ message, mentors , ...rest});
   } catch (error) {
     return res.status(422).json({ message: hmve(Mentor, error).message });
   }
