@@ -40,7 +40,7 @@ const deleteMentor = async (req, res) => {
     try {
       const { id } = req.params;
       const mentors = await Mentor.deleteOne({ _id: id });
-      return res.status(200).json({ message: "Mentor Deleted Successfully." });
+      return res.status(200).json({ message: "Mentor Deleted Successfully.", id });
     } catch (error) {
       return res.status(422).json({ message: hmve(Mentor, error).message });
     }
